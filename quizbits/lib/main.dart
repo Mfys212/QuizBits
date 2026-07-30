@@ -6,13 +6,14 @@ import 'screens/auth/register_screen.dart';
 import 'screens/main_navigation.dart';
 import 'package:flutter/services.dart';
 
-void main(){
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(const QuizoraApp());
+  runApp(const QuizBits());
 }
 
-class QuizoraApp extends StatelessWidget {
-  const QuizoraApp({super.key});
+class QuizBits extends StatelessWidget {
+  const QuizBits({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

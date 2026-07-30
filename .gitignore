@@ -80,3 +80,10 @@ backend/coverage/
 Thumbs.db
 .vscode/
 .idea/
+
+############################
+# DEBUGGER AND CONVERTER
+############################
+/quzbits/linux/
+/quzbits/macos/
+/quzbits/windows/

@@ -1,5 +1,5 @@
 name: quizbits
-description: QuizBits - Think. Guess. Win. Full 24 Screens
+description: QuizBits - Think. Guess. Win.
 publish_to: "none"
 version: 1.0.0+1
 environment:
