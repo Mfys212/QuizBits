@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+// Combination Color Application
 class AppColors {
   static const primary = Color(0xFF6366F1);
   static const primaryDark = Color(0xFF4F46E5);
