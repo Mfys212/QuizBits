@@ -3,56 +3,54 @@ from typing import Optional, Literal
 
 class UserBase(BaseModel):
     email: EmailStr = Field(
-        ...,
-        description="Email user"
+        ..., 
+        description="Email unik user, harus valid", 
+        example="user@quizbits.com"
     )
     username: str = Field(
-        ...,
-        description="Username user"
+        ..., 
+        description="Username unik user untuk login", 
+        min_length=3, 
+        max_length=50, 
+        example="hudamifta"
     )
-    role: Literal["developer", "admin", "owner"]
-
+    role: Literal["developer","admin","user"] = Field(
+        default="user", 
+        description="Role hak akses"
+    )
+    
 class UserCreate(UserBase):
     password: str = Field(
-        ...,
-        description="Password user"
+        ..., 
+        description="Password minimal 6 karakter", 
+        min_length=6, 
+        example="Hudamifta212"
     )
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = Field(
-        None,
-        description="Email user (jika kosong tidak diubah)"
+        None, 
+        description="Email baru"
     )
     username: Optional[str] = Field(
-        None,
-        description="username user (jika kosong tidak diubah)"
+        None, 
+        description="Username baru", 
+        min_length=3
     )
-    role: Optional[Literal["developer", "admin", "owner"]] = Field(
-        None,
-        description="Role user (jika kosong tidak diubah)"
+    role: Optional[Literal["developer","admin","user"]] = Field(
+        None, 
+        description="Role baru"
     )
     password: Optional[str] = Field(
-        None,
-        description="Password user (jika kosong tidak diubah)"
+        None, 
+        description="Password baru minimal 6 karakter", 
+        min_length=6
     )
-
 
 class UserResponse(UserBase):
     id: int = Field(
-        ...,
-        description="ID user"
+        ..., 
+        description="ID unik user", 
+        example=1
     )
-
-    model_config = {
-        "from_attributes": True
-    }
-
-class Count(BaseModel):
-    total_user: int = Field(
-        ...,
-        description="Jumlah User"
-    )
-    total_question: int = Field(
-        ...,
-        description="Jumlah Pertanyaan yang Dibuat"
-    )
+    model_config = {"from_attributes": True}

@@ -12,7 +12,7 @@ class Question(Base):
     explanation = Column(Text, nullable=False)
     views = Column(Integer, default=0)
     answerer = Column(Integer, default=0)
-    cover_url = Column(String(255), nullable=False)
+    cover_url = Column(String(255), nullable=False, default="")
     created_at = Column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),

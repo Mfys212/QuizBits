@@ -1,35 +1,39 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
 
 class MessageDetailBase(BaseModel):
     text: str = Field(
-        ...,
-        description="Isi Pesan"
+        ..., 
+        description="Isi pesan chat", 
+        min_length=1, 
+        example="Halo, soal nomor 5 gimana jawabnya?"
     )
 
 class MessageDetailCreate(MessageDetailBase):
-    pass
-
-class MessageDetailUpdate(BaseModel):
-    text: Optional[str] = Field(
-        None,
-        description="Isi Pesan (jika kosong tidak diubah)"
+    message_id: int = Field(
+        ..., 
+        description="ID conversation tempat pesan dikirim", 
+        example=1
     )
 
 class MessageDetailRead(MessageDetailBase):
     id: int = Field(
-        ...,
-        description="ID Pesan"
+        ..., 
+        description="ID unik pesan", 
+        example=1
     )
     created_at: datetime = Field(
-        ...,
-        description="Waktu Pesan Dibuat"
+        ..., 
+        description="Waktu pesan dikirim"
     )
-    user: str = Field(
-        ...,
-        description="User yang Buat Pesan"
+    user_id: int = Field(
+        ..., 
+        description="ID pengirim pesan", 
+        example=1
     )
-    model_config = {
-        "from_attributes": True
-    }
+    message_id: int = Field(
+        ..., 
+        description="ID conversation induk pesan", 
+        example=1
+    )
+    model_config = {"from_attributes": True}

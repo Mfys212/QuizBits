@@ -8,15 +8,15 @@ def login_user(db: Session, email_username: str, password: str):
 
     if not user:
         return None
-
+    
     if not verify_password(password, user.password):
         return None
-
+    
     token = create_access_token({
-        "sub": str(user.id),
-        "email": user.email,
-        "username": user.username,
+        "sub": str(user.id), 
+        "email": user.email, 
+        "username": user.username, 
         "role": user.role
     })
-
+    
     return token

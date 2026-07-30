@@ -2,34 +2,45 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-class CommentBase(BaseModel):
+class RatingBase(BaseModel):
     rating: int = Field(
-        ...,
-        description="Rating User untuk Soal"
+        ..., 
+        description="Nilai rating 1 sampai 5 bintang", 
+        ge=1, 
+        le=5, 
+        example=5
     )
 
-class CommentCreate(CommentBase):
-    pass
+class RatingCreate(RatingBase):
+    question_id: int = Field(
+        ..., 
+        description="ID soal yang mau di-rating", 
+        example=1
+    )
 
-class CommentUpdate(BaseModel):
+class RatingUpdate(BaseModel):
     rating: Optional[int] = Field(
-        None,
-        description="Rating User untuk Soal (jika kosong tidak diubah)"
+        None, 
+        description="Nilai rating baru 1-5", 
+        ge=1, 
+        le=5
     )
 
-class CommentRead(CommentBase):
+class RatingRead(RatingBase):
     id: int = Field(
-        ...,
-        description="ID rating"
+        ..., 
+        description="ID unik rating"
     )
-    user: str = Field(
-        ...,
-        description="User yang Rating"
+    user_id: int = Field(
+        ..., 
+        description="ID user pemberi rating"
+    )
+    question_id: int = Field(
+        ..., 
+        description="ID soal yang di-rating"
     )
     created_at: datetime = Field(
-        ...,
-        description="Waktu Komen Dibuat"
+        ..., 
+        description="Waktu rating dibuat"
     )
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = {"from_attributes": True}

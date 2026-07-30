@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 from datetime import datetime, timezone
 
@@ -13,3 +14,4 @@ class QuestionView(Base):
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
+    question = relationship("Question", back_populates="views_logs")
