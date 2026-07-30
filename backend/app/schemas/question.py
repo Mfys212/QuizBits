@@ -18,6 +18,10 @@ class QuestionBase(BaseModel):
     )
 
 class QuestionCreate(QuestionBase):
+    category_id: int = Field(
+        ...,
+        description="ID Kategori Untuk Pertanyaan/Soal"
+    )
     answers: List[AnswerCreate] = []
 
 class QuestionUpdate(BaseModel):
@@ -32,6 +36,10 @@ class QuestionUpdate(BaseModel):
     explanation: Optional[str] = Field(
         ...,
         description="Penjelasan Jawaban dari Soal (jika kosong tidak diubah)"
+    )
+    category_id: Optional[int] = Field(
+            ...,
+            description="ID Kategori Untuk Pertanyaan/Soal (jika kosong tidak diubah)"
     )
     answers: Optional[List[AnswerUpdate]] = []
 
@@ -55,6 +63,10 @@ class QuestionRead(QuestionBase):
     user: str = Field(
         ...,
         description="Pembuat Soal"
+    )
+    category: str = Field(
+        ...,
+        description="Kategori Pertanyaan/Soal"
     )
     answers: List[AnswerRead] = []
     model_config = {
