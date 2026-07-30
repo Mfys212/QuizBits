@@ -1,4 +1,6 @@
+from .activity_log import ActivityLog
 from .answer import Answer
+from .category import Category
 from .comment import Comment
 from .message_detail import MessageDetail
 from .message import Message
