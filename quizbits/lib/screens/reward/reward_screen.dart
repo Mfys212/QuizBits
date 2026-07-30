@@ -31,7 +31,7 @@ class RewardScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(20),
                 children: [
-                  // 1. KARTU TOTAL KOIN (HEADER GRADIENT)
+                  // KARTU TOTAL KOIN (HEADER GRADIENT)
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -94,7 +94,7 @@ class RewardScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // 2. SECTION TITLE
+                  // SECTION TITLE
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -117,7 +117,7 @@ class RewardScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // 3. DAFTAR RIWAYAT
+                  // DAFTAR RIWAYAT
                   const _RewardHistoryItem(
                     coin: '+100',
                     title: 'Jawaban Benar',
