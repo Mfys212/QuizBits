@@ -16,38 +16,32 @@ class User(Base):
     )
     questions = relationship(
         "Question",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
     rewards = relationship(
         "Reward",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
     comments = relationship(
         "Comment",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
-    questions = relationship(
-        "Question",
-        back_populates="users",
-        cascade="all, delete-orphan"
-    )
-    messages = relationship(
-        "Message",
-        back_populates="users",
-        cascade="all, delete-orphan"
-    )
-    detail_messages = relationship(
-        "Detail_Message",
-        back_populates="users",
+    message_details = relationship(
+        "MessageDetail", 
+        back_populates="user", 
         cascade="all, delete-orphan"
     )
     ratings = relationship(
         "Rating",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
+    )
+    activity_logs = relationship(
+        "ActivityLog", 
+        back_populates="user"
     )
 
     def __repr__(self):

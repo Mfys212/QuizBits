@@ -3,8 +3,9 @@ from typing import Optional
 
 class AnswerBase(BaseModel):
     answer: str = Field(
-        ...,
-        description="Opsi Jawaban dari Pertanyaan"
+        ..., 
+        description="Teks opsi jawaban", 
+        example="Jakarta adalah ibukota Indonesia"
     )
 
 class AnswerCreate(AnswerBase):
@@ -12,15 +13,14 @@ class AnswerCreate(AnswerBase):
 
 class AnswerUpdate(BaseModel):
     answer: Optional[str] = Field(
-        None,
-        description="Opsi Jawaban dari Pertanyaan (jika kosong tidak diubah)"
+        None, 
+        description="Teks opsi jawaban baru"
     )
 
 class AnswerRead(AnswerBase):
     id: int = Field(
-        ...,
-        description="ID Jawaban"
+        ..., 
+        description="ID unik jawaban", 
+        example=1
     )
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = {"from_attributes": True}

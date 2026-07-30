@@ -1,26 +1,31 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from datetime import datetime
 
 class RewardBase(BaseModel):
     reward: int = Field(
-        ...,
-        description="Jumlah Reward"
+        ..., 
+        description="Jumlah poin reward", 
+        example=10
     )
 
 class RewardCreate(RewardBase):
-    pass
-
-class RewardUpdate(BaseModel):
-    reward: Optional[str] = Field(
-        None,
-        description="Jumlah Reward (jika kosong tidak diubah)"
+    user_id: int = Field(
+        ..., 
+        description="ID user penerima reward", 
+        example=1
     )
 
 class RewardRead(RewardBase):
     id: int = Field(
-        ...,
-        description="ID Reward"
+        ..., 
+        description="ID unik reward"
     )
-    model_config = {
-        "from_attributes": True
-    }
+    user_id: int = Field(
+        ..., 
+        description="ID user pemilik reward"
+    )
+    created_at: datetime = Field(
+        ..., 
+        description="Waktu reward diberikan"
+    )
+    model_config = {"from_attributes": True}

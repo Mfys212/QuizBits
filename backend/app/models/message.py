@@ -26,13 +26,13 @@ class Message(Base):
     user1 = relationship(
         "User",
         foreign_keys=[user1_id],
-        back_populates="messages",
+        # back_populates="messages",
     )
 
     user2 = relationship(
         "User",
         foreign_keys=[user2_id],
-        back_populates="messages",
+        # back_populates="messages",
     )
 
     message_detail = relationship(
@@ -42,4 +42,4 @@ class Message(Base):
     )
 
     def __repr__(self):
-        return f"<Messages {self.user}>"
+        return f"<Messages {self.user1}>"

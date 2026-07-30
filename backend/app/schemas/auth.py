@@ -2,19 +2,28 @@ from pydantic import BaseModel, EmailStr, Field
 
 class LoginRequest(BaseModel):
     email_username: str = Field(
-        ...,
-        description="Email atau Username untuk login"
+        ..., 
+        description="Email atau username yang dipakai buat login", 
+        example="hudamifta212@gmail.com"
     )
     password: str = Field(
-        ...,
-        description="Password untuk login"
+        ..., 
+        description="Password akun user", 
+        example="Hudamifta212"
     )
 
 class TokenResponse(BaseModel):
-    # access_token: str
+    access_token: str = Field(
+        ..., 
+        description="JWT access token untuk akses endpoint auth"
+    )
+    token_type: str = Field(
+        default="bearer", 
+        description="Tipe token, selalu bearer"
+    )
     message: str = Field(
-        ...,
-        description="Pesan login/logout sukses"
+        default="Login sukses", 
+        description="Pesan status login"
     )
 
 class UserMe(BaseModel):
@@ -34,3 +43,6 @@ class UserMe(BaseModel):
         ...,
         description="Role user yang login"
     )
+    model_config = {
+        "from_attributes": True
+    }

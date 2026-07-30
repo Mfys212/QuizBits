@@ -4,32 +4,40 @@ from datetime import datetime
 
 class CommentBase(BaseModel):
     comment: str = Field(
-        ...,
-        description="Komentar User untuk Soal"
+        ..., 
+        description="Isi komentar untuk soal", 
+        min_length=1, 
+        example="Soalnya keren banget!"
     )
-
+    
 class CommentCreate(CommentBase):
-    pass
+    question_id: int = Field(
+        ..., 
+        description="ID soal yang dikomentari", 
+        example=1
+    )
 
 class CommentUpdate(BaseModel):
     comment: Optional[str] = Field(
-        None,
-        description="Komentar User untuk Soal (jika kosong tidak diubah)"
+        None, 
+        description="Isi komentar baru"
     )
 
 class CommentRead(CommentBase):
     id: int = Field(
-        ...,
-        description="ID Komentar"
+        ..., 
+        description="ID unik komentar"
     )
-    user: str = Field(
-        ...,
-        description="User yang Komen"
+    user_id: int = Field(
+        ..., 
+        description="ID user pembuat komentar"
+    )
+    question_id: int = Field(
+        ..., 
+        description="ID soal yang dikomentari"
     )
     created_at: datetime = Field(
-        ...,
-        description="Waktu Komen Dibuat"
+        ..., 
+        description="Waktu komentar dibuat"
     )
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = {"from_attributes": True}

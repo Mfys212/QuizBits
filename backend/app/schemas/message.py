@@ -1,31 +1,33 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import List
-from message_detail import MessageDetailRead
 
-class MessageBase(BaseModel):
-    pass
+class MessageCreate(BaseModel):
+    user2_id: int = Field(
+        ...,
+        description="ID user lawan bicara yang mau diajak chat, tidak boleh ID sendiri",
+        example=2
+    )
 
-class MessageCreate(MessageBase):
-    pass
-
-class MessageUpdate(BaseModel):
-    pass
-
-class MessageRead(MessageBase):
+class MessageRead(BaseModel):
     id: int = Field(
         ...,
-        description="ID Percakapan"
+        description="ID unik conversation / percakapan",
+        example=1
     )
     created_at: datetime = Field(
         ...,
-        description="Waktu Percakapan Dibuat"
+        description="Waktu conversation pertama kali dibuat",
+        example="2026-07-30T10:00:00Z"
     )
-    user: str = Field(
+    user1_id: int = Field(
         ...,
-        description="Lawan Percakapan User"
+        description="ID user pertama (pembuat conversation)",
+        example=1
     )
-    messages: List[MessageDetailRead] = []
-    model_config = {
-        "from_attributes": True
-    }
+    user2_id: int = Field(
+        ...,
+        description="ID user kedua (lawan bicara)",
+        example=2
+    )
+
+    model_config = {"from_attributes": True}

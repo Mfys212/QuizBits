@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String,  DateTime, Text, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 from datetime import datetime, timezone
@@ -13,7 +13,7 @@ class Reward(Base):
         ForeignKey("users.id"),
         nullable=False
     )
-
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     user = relationship("User", back_populates="rewards")
 
     def __repr__(self):

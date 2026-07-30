@@ -3,35 +3,36 @@ from datetime import datetime
 from typing import Optional
 
 class ActivityRead(BaseModel):
-    id: int = Field(..., description="ID unik aktivitas")
-    user: Optional[str] = Field(
-        None,
-        description="User yang melakukan aktivitas"
+    id: int = Field(
+        ..., 
+        description="ID unik log aktivitas"
+    )
+    user_id: Optional[int] = Field(
+        None, 
+        description="ID user pelaku aktivitas, null kalau sistem"
     )
     module: str = Field(
-        ...,
-        description="Nama modul / fitur yang diubah"
+        ..., 
+        description="Nama modul yang diubah, contoh: user, question, comment", 
+        example="question"
     )
     action: str = Field(
-        ...,
-        description="Jenis aktivitas: create, update, delete"
+        ..., 
+        description="Jenis aksi: create, update, delete", 
+        example="create"
     )
     object_id: int = Field(
-        ...,
-        description="ID data yang diubah"
+        ..., 
+        description="ID objek yang diutak-atik", 
+        example=10
     )
     description: str = Field(
-        ...,
-        description="Keterangan aktivitas yang ditampilkan di dashboard"
+        ..., 
+        description="Deskripsi aktivitas di dashboard", 
+        example="Buat soal: Apa ibukota Indonesia?"
     )
     created_at: datetime = Field(
-        ...,
+        ..., 
         description="Waktu aktivitas terjadi"
     )
-
-    # class Config:
-    #     orm_mode = True
-
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = {"from_attributes": True}
