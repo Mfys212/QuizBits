@@ -23,8 +23,13 @@ class Question(Base):
         ForeignKey("users.id"),
         nullable=False
     )
-
+    category_id = Column(
+        Integer,
+        ForeignKey("categories.id"),
+        nullable=False
+    )
     user = relationship("User", back_populates="questions")
+    category = relationship("Category", back_populates="questions")
     views_logs = relationship(
         "QuestionView",
         cascade="all, delete-orphan",
