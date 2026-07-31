@@ -37,7 +37,7 @@ class Message(Base):
 
     message_detail = relationship(
         "MessageDetail",
-        back_populates="messages",
+        back_populates="message",
         cascade="all, delete-orphan"
     )
 

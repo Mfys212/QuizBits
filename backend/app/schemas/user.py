@@ -54,3 +54,15 @@ class UserResponse(UserBase):
         example=1
     )
     model_config = {"from_attributes": True}
+
+class Count(BaseModel):
+    total_user: int = Field(
+        ..., 
+        description="Total jumlah user terdaftar", 
+        example=10
+    )
+    total_question: int = Field(
+        ..., 
+        description="Total jumlah soal yang dibuat user login", 
+        example=5
+    )

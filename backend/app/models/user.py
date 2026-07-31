@@ -29,7 +29,7 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan"
     )
-    message_details = relationship(
+    message_detail = relationship(
         "MessageDetail", 
         back_populates="user", 
         cascade="all, delete-orphan"
