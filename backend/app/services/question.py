@@ -1,9 +1,13 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 from app.models.question import Question
 from app.models.answer import Answer
 from app.schemas.question import QuestionCreate, QuestionUpdate
 from app.services.activity_log import log_activity
+from app.core.config import UPLOAD_DIR, ALLOWED_IMAGE_TYPES, MAX_UPLOAD_SIZE
+import os
+import uuid
+import shutil
 
 def create_question(db: Session, data: QuestionCreate, user_id: int):
     q = Question(
@@ -74,3 +78,20 @@ def increment_view(db: Session, q_id: int, ip: str):
         q.views = (q.views or 0) + 1
         db.add(QuestionView(question_id=q_id, ip_address=ip))
         db.commit()
+
+def save_upload_file(file: UploadFile, subfolder: str = "covers") -> str:
+    if file.content_type not in ALLOWED_IMAGE_TYPES:
+        raise HTTPException(status_code=400, detail=f"Tipe file harus: {', '.join(ALLOWED_IMAGE_TYPES)}")
+    file.file.seek(0, os.SEEK_END)
+    file_size = file.file.tell()
+    file.file.seek(0)
+    if file_size > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=400, detail=f"File terlalu besar. Maks {MAX_UPLOAD_SIZE // (1024*1024)}MB")
+    ext = os.path.splitext(file.filename)[1] or ".jpg"
+    unique_name = f"{uuid.uuid4().hex}{ext}"
+    upload_path = os.path.join(UPLOAD_DIR, subfolder)
+    os.makedirs(upload_path, exist_ok=True)
+    file_path = os.path.join(upload_path, unique_name)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    return f"/uploads/{subfolder}/{unique_name}"

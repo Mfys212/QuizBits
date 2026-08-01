@@ -1,12 +1,18 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import Base, engine
 from app.api import auth, users, categories, questions, comments, ratings, rewards, messages
+import os
 
 # Uncomment untuk auto create table di dev, prod pakai alembic
 # Base.metadata.create_all(bind=engine)
 
+os.makedirs('uploads/covers', exist_ok=True)
+os.makedirs('uploads/avatars', exist_ok=True)
+
 app = FastAPI(title="QuizBits API", version="1.0.0", description="Backend untuk QuizBits - Flutter Quiz App")
+app.mount('/uploads', StaticFiles(directory='uploads'), name='uploads')
 
 app.add_middleware(
     CORSMiddleware,

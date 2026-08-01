@@ -21,3 +21,8 @@ if not DATABASE_URL:
 
 if not SECRET_KEY:
     raise RuntimeError("SECRET_KEY not set")
+
+UPLOAD_DIR = os.getenv("UPLOAD_DIR", "uploads")
+UPLOAD_URL_PREFIX = "/uploads"
+MAX_UPLOAD_SIZE = 5 * 1024 * 1024
+ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/jpg"]

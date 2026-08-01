@@ -104,3 +104,15 @@ class QuestionRead(QuestionBase):
         description="List opsi jawaban"
     )
     model_config = {"from_attributes": True}
+
+class CoverUploadResponse(BaseModel):
+    cover_url: str = Field(
+        ..., 
+        description="URL path cover yang berhasil diupload", 
+        example="/uploads/covers/a1b2c3d4e5f6.jpg"
+    )
+    message: str = Field(
+        ..., 
+        description="Pesan status", 
+        example="Upload berhasil"
+    )
