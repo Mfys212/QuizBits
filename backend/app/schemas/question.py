@@ -30,7 +30,7 @@ class QuestionCreate(QuestionBase):
     )
     answers: List[str] = Field(
         default=[], 
-        description="List opsi jawaban minimal 2 opsi", 
+        description="List opsi jawaban minimal 2 opsi (dalam bentuk str)", 
         example=["Jakarta","Bandung","Surabaya","Medan"]
     )
 
