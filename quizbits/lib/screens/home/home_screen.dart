@@ -10,8 +10,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // ambil tema biar gampang
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor, // biar ngikut tema
       appBar: AppBar(
         title: Row(
           children: [
@@ -30,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFF7ED),
+              color: theme.colorScheme.surface, // FIX: tadinya cardColor
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: AppColors.warning.withValues(alpha: 0.3),
@@ -71,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                 hintText: 'Search questions...',
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
-                fillColor: AppColors.bgLight,
+                fillColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5), // FIX: tadinya AppColors.bgLight
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -150,7 +152,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // QUESTION CARD 1 (Dinamis kirim data ke DetailPertanyaanScreen)
+          // QUESTION CARD 1
           QuestionCard(
             onTap: () {
               Navigator.push(
@@ -167,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                       imageUrl:
                           'https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800',
                       options: ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'],
-                      correctAnswerIndex: 0, // Tokyo
+                      correctAnswerIndex: 0,
                       viewsCount: 1200,
                       rating: 4.8,
                       ratingCount: 120,
@@ -186,7 +188,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // QUESTION CARD 2 (Dinamis kirim data ke DetailPertanyaanScreen)
+          // QUESTION CARD 2
           QuestionCard(
             onTap: () {
               Navigator.push(
@@ -203,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                       imageUrl:
                           'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800',
                       options: ['Instagram', 'TikTok', 'Spotify', 'Twitter'],
-                      correctAnswerIndex: 1, // TikTok
+                      correctAnswerIndex: 1,
                       viewsCount: 620,
                       rating: 4.4,
                       ratingCount: 45,
