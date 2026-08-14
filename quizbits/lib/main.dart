@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // <-- tambah ini
+import 'package:provider/provider.dart'; 
 import 'theme/app_theme.dart';
-import 'theme/theme_provider.dart'; // <-- tambah ini
+import 'theme/theme_provider.dart'; 
 import 'screens/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
@@ -29,8 +29,8 @@ class QuizBits extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'QuizBits',
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark, // <-- yang tadi lu bikin
-      themeMode: themeProvider.mode, // <-- ini yang bikin ganti beneran
+      darkTheme: AppTheme.dark, 
+      themeMode: themeProvider.themeMode,
       home: const SplashScreen(),
       routes: {
         '/login': (_) => const LoginScreen(),

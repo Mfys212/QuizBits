@@ -28,13 +28,8 @@ class _PencarianScreenState extends State<PencarianScreen> with SingleTickerProv
   Future<void> _handleBack() async {
     if (_isPopping) return;
     _isPopping = true;
-    
-    // 1. Tutup keyboard dulu
     FocusScope.of(context).unfocus();
-    
-    // 2. Tunggu animasi keyboard selesai (ini kunci dari log ImeTracker lu)
     await Future.delayed(const Duration(milliseconds: 200));
-    
     if (mounted) {
       Navigator.pop(context);
     }
@@ -42,16 +37,20 @@ class _PencarianScreenState extends State<PencarianScreen> with SingleTickerProv
 
   @override
   Widget build(BuildContext context){
+    final theme = Theme.of(context);
+
     return PopScope(
-      canPop: false, // kita handle manual back nya
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         await _handleBack();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false, // cegah scaffold rebuild pas keyboard animasi
+        backgroundColor: theme.scaffoldBackgroundColor, // FIX
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: theme.scaffoldBackgroundColor, // FIX
+          scrolledUnderElevation: 0,
           title: const Text('Pencarian'), 
           leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: _handleBack)
         ),
@@ -62,25 +61,19 @@ class _PencarianScreenState extends State<PencarianScreen> with SingleTickerProv
               controller: ctrl, 
               decoration: InputDecoration(
                 hintText: 'Cari...', 
+                hintStyle: GoogleFonts.poppins(fontSize: 12, color: AppColors.textMuted),
+                filled: true,
+                fillColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5), // FIX
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                 prefixIcon: const Icon(Icons.search), 
-                // JANGAN pakai TextButton di suffixIcon, ini bikin _dependents error
-                // Ganti jadi IconButton
                 suffixIcon: IconButton(
                   icon: Text('Batal', style: GoogleFonts.poppins(fontSize: 12, color: AppColors.primary)),
-                  onPressed: (){ 
-                    ctrl.clear(); 
-                    setState((){}); 
-                  },
+                  onPressed: (){ ctrl.clear(); setState((){}); },
                 ),
               )
             )
           ),
-          TabBar(
-            controller: _tabController,
-            isScrollable: false, 
-            labelColor: AppColors.primary, 
-            tabs: const [Tab(text: 'Semua'), Tab(text: 'Pertanyaan'), Tab(text: 'Pengguna')]
-          ),
+          TabBar(controller: _tabController, isScrollable: false, labelColor: AppColors.primary, tabs: const [Tab(text: 'Semua'), Tab(text: 'Pertanyaan'), Tab(text: 'Pengguna')]),
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -90,8 +83,8 @@ class _PencarianScreenState extends State<PencarianScreen> with SingleTickerProv
                   SizedBox(height: 12),
                   _Res(image: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=400', title: 'Siapa penemu origami di Jepang?', cat: 'History', views: '820 views • 4.5'),
                 ]),
-                Center(child: Text("List Pertanyaan")),
-                Center(child: Text("List Pengguna")),
+                const Center(child: Text("List Pertanyaan")),
+                const Center(child: Text("List Pengguna")),
               ],
             )
           )
@@ -106,14 +99,24 @@ class _Res extends StatelessWidget {
   const _Res({required this.image, required this.title, required this.cat, required this.views});
   @override
   Widget build(BuildContext context){
-    return Row(children: [
-      ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.network(image, width: 70, height: 60, fit: BoxFit.cover)),
-      const SizedBox(width: 12),
-      Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12)),
-        const SizedBox(height: 2),
-        Text(cat, style: GoogleFonts.poppins(fontSize: 10, color: const Color(0xFF64748B))),
-      ]))
-    ]);
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface, // FIX
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: 0.15)),
+      ),
+      child: Row(children: [
+        ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.network(image, width: 70, height: 60, fit: BoxFit.cover)),
+        const SizedBox(width: 12),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12)),
+          const SizedBox(height: 2),
+          Text(cat, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textMuted)), // FIX tadinya 0xFF64748B
+          Text(views, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textMuted)),
+        ]))
+      ])
+    );
   }
 }
